@@ -1,6 +1,5 @@
 /*
 BASE ORI BY KUNZXD😐
-HANYA SEDIKIT NGAMBIL DI SC IKYY
 SILAHKAN DIPAKE KAK:)
 TQTQ JAN DIAPUS BTW:)
 
@@ -25,6 +24,7 @@ botName = 'MIKU BOT'
 ownerName = 'KxD' 
 ownerNumber = '6287778886786'
 faketeks = '𝙺𝚄𝙽𝚉𝙱𝙾𝚃𝚉︎'
+publics = true
 mypp = fs.readFileSync('thumbnail.jpg') // thumbnailnya
 
 //●●●●●●●●●●●●●●●●●●●●●● DATABASE ●●●●●●●●●●●●●●●●●●●●●●
@@ -231,6 +231,7 @@ if (isCmd && !isGroup)
 console.log(color('[ CMD ]', 'red'), color(time), color(`${command} [${args.length}]`), 'from', color(pushname))
 if (isCmd && isGroup)
 console.log(color('[ CMD ]', 'red'), color(time), color(`${command} [${args.length}]`), 'from', color(pushname), 'in', color(groupName))
+if (!kxd.key.fromMe && publics === false) return
 
 //●●●●●●●●●●●●●●●●●●●●●● CASE/COMMAND ●●●●●●●●●●●●●●●●●●●●●●
 
@@ -513,6 +514,22 @@ miku.sendMessage(from, buffer, sticker, { quoted: fstatus })
 break
 case 'sc': case 'sourcecode': case 'script':
 reply('https://github.com/KunzxD404/MikuBase\n\nPlease Take Star⭐\n\nAnd follow:)')
+break
+case 'public':
+if (!isOwner && !kxd.key.fromMe) return reply(mess.only.owner)
+if (publics === true) return 
+publics = true
+reply(`sukses public-mode`)
+break
+case 'self':
+if (!isOwner && !kxd.key.fromMe) return reply(mess.only.owner)
+if (publics === false) return
+publics = false
+reply(`sukses self-mode`)
+break
+case 'mode':
+if (!isOwner && !kxd.key.fromMe) return
+reply(`${publics ? 'public-mode' : 'self-mode'}`)
 break
 
 //●●●●●●●●●●●●●●●●●●●●●● END ●●●●●●●●●●●●●●●●●●●●●●
