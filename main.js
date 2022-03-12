@@ -61,7 +61,7 @@ ppimg = await kunz.getProfilePicture(`${anu.participants[0].split('@')[0]}@c.us`
 } catch {
 ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
 }
-teks = `*Hi @${num.split('@')[0]}*\n*selamat datamg di grup*`
+teks = `*Hi @${num.split('@')[0]}*\n*selamat datang di grup*`
 let buffer = await getBuffer(ppimg)
 kunz.sendMessage(mdata.id, buffer, MessageType.image, { caption: teks, contextInfo: { "mentionedJid": [num] } })
 } else if (anu.action == 'remove') {
