@@ -1,5 +1,5 @@
 {
-  "name": "KXD",
+  "name": "KxD",
   "version": "1.0.0",
   "description": "Ubah-Nama-Gak-Bikin-Lu-Jadi-Mastah",
   "main": "main.js",
@@ -13,7 +13,7 @@
   "author": "KunzxD",
   "dependencies": {
     "@adiwajshing/baileys": "^3.5.2",
-    "crypto": "^1.0.1"
+    "crypto": "^1.0.1",
     "child_process": "^1.0.2",
     "chalk": "^4.1.2",
     "figlet": "^1.5.0",
