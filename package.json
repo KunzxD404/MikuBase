@@ -4,7 +4,7 @@
   "description": "Ubah-Nama-Gak-Bikin-Lu-Jadi-Mastah",
   "main": "main.js",
   "directories": {
-    "lib": "lib"
+    "lib": "Baileys"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
