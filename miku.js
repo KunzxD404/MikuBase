@@ -268,6 +268,8 @@ const menunya = `Hi Kak ${pushname} Saya ${botName}
 ┃
 ┣${prefix}owner
 ┃
+┣${prefix}apakah
+┃
 ┗ *more?tambahin sendiri*
 
 Script : https://github.com/KunzxD404/mikuBase`
@@ -515,6 +517,16 @@ break
 case 'sc': case 'sourcecode': case 'script':
 reply('https://github.com/KunzxD404/MikuBase\n\nPlease Take Star⭐\n\nAnd follow:)')
 break
+case 'apakah':
+m.reply('
+*Pertanyaan:* ${m.text}
+*Jawaban:* ${pickRandom(['Ya', 'Mungkin iya', 'Mungkin', 'Mungkin tidak', 'Tidak', 'Tidak mungkin'])}
+}
+function pickRandom(list) {
+  return list[Math.floor(Math.random() *
+list.length)]
+}
+break
 case 'public':
 if (!isOwner && !kxd.key.fromMe) return reply(mess.only.owner)
 if (publics === true) return 
@@ -558,7 +570,7 @@ console.log('Message : %s', color(e, 'cyan'))
 }
 // THANKS TO
 //
-// KUNZXD AND IKYY (CUMA ITU🗿)
+// KUNZXD,IKYY,AmmarBN(CUMA ITU🗿)
 // 
 //
 //
