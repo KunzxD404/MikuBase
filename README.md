@@ -3,13 +3,13 @@ Base WhatsApp Bot
 
 ## NOTE
 Not Support Multi-Device!!!
+if there is an error, immediately open the issue
+This is Base Script For Everyone, Not For Sale!!
 
 <p align="center">
 	<img src="https://telegra.ph/file/85aef61bdac1759442b2e.jpg" width="35%" style="margin-left: auto;margin-right: auto;display: block;">
 </p>
 <h1 align="center">Nakano Miku</h1>
-
-This is Base Script For Everyone, Not For Sale!!
 
 ## UNTUK PENGGUNA WINDOWS/RDP
 
