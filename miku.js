@@ -23,7 +23,7 @@ const { getBuffer, getGroupAdmins, getRandom } = require('./lib/myfunc')
 botName = 'MIKU BOT'
 ownerName = 'KxD' 
 ownerNumber = '6287778886786'
-faketeks = '𝙺𝚄𝙽𝚉𝙱𝙾𝚃𝚉︎'
+faketeks = '*MIKUCHAN*'
 publics = true
 mypp = fs.readFileSync('thumbnail.jpg') // thumbnailnya
 
@@ -41,10 +41,10 @@ kxd = kxd.messages.all()[0]
 if (!kxd.message) return
 if (kxd.key && kxd.key.remoteJid == 'status@broadcast') return
 if (kxd.key.id.startsWith('3EB0') && kxd.key.id.length === 12) return
-const { Functions }= require('./lib/functions.js');
 global.ky_ttt
 global.blocked
 kxd.message = (Object.keys(kxd.message)[0] === 'ephemeralMessage') ? kxd.message.ephemeralMessage.message : kxd.message
+const { Functions }= require('./lib/functions.js');
 const { text, extendedText, contact, location, liveLocation, image, video, sticker, document, audio, product } = MessageType
 const time = moment.tz('Asia/Jakarta').format('DD/MM HH:mm:ss')
 const time2 = moment().tz('Asia/Jakarta').format('HH:mm:ss')
@@ -212,14 +212,14 @@ const isQuotedpticker = isQuotedMsg ? (quotedMsg.type === 'stickerMessage') ? tr
 
 if (isGroup && isAntiLink && !isOwner && !isGroupAdmins && isBotGroupAdmins){
 if (budy.match(/(https:\/\/chat.whatsapp.com)/gi)) {
-fakestatus(`*「 GROUP LINK TERDETEKSI 」*\n\nSepertinya kamu mengirimkan link nomor, maaf kamu akan di kick:)`)
+reply(`*「 GROUP LINK TERDETEKSI 」*\n\nSepertinya kamu mengirimkan link grup, maaf kamu akan di kick:)`)
 setTimeout( () => {
 miku.groupRemove(from, [sender])}, 1000)
 }
 }
 if (isGroup && isAntiLink && !isOwner && !isGroupAdmins && isBotGroupAdmins){
 if (budy.match(/(https:\/\/wa.me)/gi)) {
-fakestatus(`*「 NOMOR LINK TERDETEKSI 」*\n\nSepertinya kamu mengirimkan link nomor, maaf kamu akan di kick:)`)
+reply(`*「 NOMOR LINK TERDETEKSI 」*\n\nSepertinya kamu mengirimkan link nomor, maaf kamu akan di kick:)`)
 setTimeout( () => {
 miku.groupRemove(from, [sender])}, 1000)
 }
@@ -268,6 +268,10 @@ const menunya = `Hi Kak ${pushname} Saya ${botName}
 ┃
 ┣${prefix}owner
 ┃
+┣bc
+┃
+┣bcgc
+┃
 ┗ *more?tambahin sendiri*
 
 Script : https://github.com/KunzxD404/mikuBase`
@@ -275,7 +279,7 @@ miku.sendMessage(from, mypp, image, { quoted: { key: { fromMe: false, participan
 break
 case 'leave': 
 if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isGroupAdmins && !kxd.key.fromMe) return reply(mess.only.admin)
 setTimeout( () => {
 miku.groupLeave(from) 
 }, 2000)
@@ -285,7 +289,7 @@ reply('Byee...')
 break
 case 'antilink':
 if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isGroupAdmins && !kxd.key.fromMe) return reply(mess.only.admin)
 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 if (!q) return reply(`Pilih 1 atau 0`)
 if (args[0].toLowerCase() === '1'){
@@ -304,7 +308,7 @@ reply(`Pilih 1 atau 0`)
 break
 case 'welcome':
 if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isGroupAdmins && !kxd.key.fromMe) return reply(mess.only.admin)
 if (args.length < 1) return reply('!welcome 1/0')
 if ((args[0]) === '1') {
 if (isWelkom) return reply('Udah aktif')
@@ -329,14 +333,25 @@ linkgc = await miku.groupInviteCode(from)
 yeh = `https://chat.whatsapp.com/${linkgc}`
 miku.sendMessage(from, yeh, text, { quoted: fstatus })
 break
+case 'clearall':{
+if (!isOwner && !kxd.key.fromMe) return reply(mess.only.owner)
+let chiit = await miku.chats.all()
+for (let i of chiit){
+miku.modifyChat(i.jid, 'clear', {
+includeStarred: false
+})
+}
+reply(`Succes Delete All Chat🙂`)
+}
+break
 case 'promote' :
 if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isGroupAdmins && !kxd.key.fromMe) return reply(mess.only.admin)
 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 if (kxd.message.extendedTextMessage === undefined || kxd.message.extendedTextMessage === null) return reply('Tag target yang ingin di jadi admin!')
 mentioned = kxd.message.extendedTextMessage.contextInfo.mentionedJid
 if (mentioned.length > 1) {
-teks = 'Perintah Diterima menambahkan leluhur di grup ini'
+teks = 'Perintah Diterima menambahkan leluhur di grup ini\n'
 for (let _ of mentioned) {
 teks += `@${_.split('@')[0]}\n`
 }
@@ -349,12 +364,12 @@ miku.groupMakeAdmin(from, mentioned)
 break
 case 'demote' :
 if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isGroupAdmins && !kxd.key.fromMe) return reply(mess.only.admin)
 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 if (kxd.message.extendedTextMessage === undefined || kxd.message.extendedTextMessage === null) return reply('Tag target yang ingin di tidak jadi admin!')
 mentioned = kxd.message.extendedTextMessage.contextInfo.mentionedJid
 if (mentioned.length > 1) {
-teks = 'Perintah Diterima Menurunkan Jabatan Admin'
+teks = 'Perintah Diterima Menurunkan Jabatan Admin\n'
 for (let _ of mentioned) {
 teks += `@${_.split('@')[0]}\n`
 }
@@ -367,7 +382,7 @@ miku.groupDemoteAdmin(from, mentioned)
 break
 case 'add':
 if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isGroupAdmins && !kxd.key.fromMe) return reply(mess.only.admin)
 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 if (args.length < 1) return reply('Nomer Yg Mau Di Add Mana ?')
 if (args[0].startsWith('08')) return reply('Gunakan Kode Negara Gan')
@@ -381,7 +396,7 @@ reply('Gagal menambahkan target')
 break
 case 'kick':
 if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isGroupAdmins && !kxd.key.fromMe) return reply(mess.only.admin)
 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 if(!q)return reply(`*Format Error!*\n\n*Example : ${prefix + command} @tag*`)
 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
@@ -391,22 +406,21 @@ reply(`Succes kick target😼`)
 break
 case 'opengc' :
 if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isGroupAdmins && !kxd.key.fromMe) return reply(mess.only.admin)
 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 reply(`✓Sukses Membuka Group *${groupMetadata.subject}*`)
 miku.groupSettingChange(from, GroupSettingChange.messageSend, false)
 break
 case 'closegc' :
 if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
+if (!isGroupAdmins && !kxd.key.fromMe) return reply(mess.only.admin)
 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 reply(`✓Sukses Menutup Group *${groupMetadata.subject}*`)
 miku.groupSettingChange(from, GroupSettingChange.messageSend, true)
 break
 case 'hidetag':
 if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
-if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+if (!isGroupAdmins && !kxd.key.fromMe) return reply(mess.only.admin)
 ht = body.slice(9)
 members_id = []
 for (let mem of groupMembers) {
@@ -499,7 +513,7 @@ if (err) return reply('Gagal, Terjadi kesalahan, silahkan coba beberapa saat lag
 exec(`ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${ranw}`, (err) => {
 fs.unlinkSync(ranp)
 if (err) return reply(mess.error.stick)
-miku.sendMessage(from, fs.readFileSync(ranw), sticker, { quoted: kyy })
+miku.sendMessage(from, fs.readFileSync(ranw), sticker, { quoted: kxd })
 fs.unlinkSync(ranw)
 })
 })
@@ -511,6 +525,41 @@ case 'attp':
 if (args.length == 0) return reply(`Example: ${prefix + command} Hai`)
 buffer = await getBuffer(`https://api.xteam.xyz/attp?file&text=${q}`)
 miku.sendMessage(from, buffer, sticker, { quoted: fstatus })
+break
+case 'bc': 
+if (!isOwner && !kxd.key.fromMe) return reply(mess.only.owner)
+if (args.length < 1) return reply('.......')
+anu = await miku.chats.all()
+for (let _ of anu) {
+buttonss = [{buttonId: `${prefix}86`, buttonText: {displayText: 'Ok'}, type: 1}]
+const btnbc = {
+contentText: `${q}`,
+footerText: faketeks,
+buttons: buttonss,
+headerType: 1
+}
+await miku.sendMessage(_.jid, btnbc, MessageType.buttonsMessage, {quoted: fstatus})
+}
+reply(`Sukses mengirim Broadcast`)
+break
+case 'bcgc':
+if (!isOwner && !kxd.key.fromMe) return reply(mess.only.owner)
+if (args.length < 1) return reply('.......')
+anu = await groupMembers 
+tagss = miku.participant
+if (isMedia && !miku.message.videoMessage || isQuotedImage) {
+const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(kxd).replace('quotedM','m')).message.extendedTextMessage.contextInfo : kxd
+buffer = await miku.downloadMediaMessage(encmedia)
+for (let _ of anu) {
+miku.sendMessage(_.jid, buffer, image, {caption: `${body.slice(6)}`})
+}
+reply('')
+} else {
+for (let _ of anu) {
+sendMess(_.jid, `${body.slice(6)}`)
+}
+reply('Sukses broadcast group')
+}
 break
 case 'sc': case 'sourcecode': case 'script':
 reply('https://github.com/KunzxD404/MikuBase\n\nPlease Take Star⭐\n\nAnd follow:)')
@@ -558,7 +607,7 @@ console.log('Message : %s', color(e, 'cyan'))
 }
 // THANKS TO
 //
-// KUNZXD AND IKYY (CUMA ITU🗿)
+// KUNZXD (CUMA ITU🗿)
 // 
 //
 //
